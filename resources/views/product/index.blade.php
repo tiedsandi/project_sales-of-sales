@@ -19,16 +19,16 @@
       </div>
     </form>
 
-    <table class="table table-bordered table-striped ">
+    <table class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th>No</th>
-          <th>Name</th>
-          <th>Category</th>
+          <th><a href="{{ route('product.index', ['sort' => 'id', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">No</a></th>
+          <th><a href="{{ route('product.index', ['sort' => 'product_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Name</a></th>
+          <th><a href="{{ route('product.index', ['sort' => 'category_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Category</a></th>
           <th>Photo</th>
-          <th>Price</th>
+          <th><a href="{{ route('product.index', ['sort' => 'product_price', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Price</a></th>
           <th>Description</th>
-          <th>Active</th>
+          <th><a href="{{ route('product.index', ['sort' => 'is_active', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Active</a></th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -63,7 +63,7 @@
           </tr>
         @empty
           <tr>
-            <td colspan="7" class="text-center">No products found.</td>
+            <td colspan="8" class="text-center">No products found.</td>
           </tr>
         @endforelse
       </tbody>

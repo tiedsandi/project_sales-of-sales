@@ -16,11 +16,24 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $products = Product::with('category')->when($search, function ($query, $search) {
-            return $query->where('product_name', 'like', "%{$search}%");
-        })->orderByDesc('id')->paginate(5);
+        $sort = $request->input('sort', 'id');
+        $direction = $request->input('direction', 'asc');
 
-        return view('product.index', compact('products'));
+        $products = Product::with('category')
+            ->when($search, function ($query, $search) {
+                return $query->where('product_name', 'like', "%{$search}%");
+            })
+            ->when($sort, function ($query, $sort) use ($direction) {
+                if ($sort === 'category_name') {
+                    return $query->join('categories', 'products.category_id', '=', 'categories.id')
+                        ->orderBy('categories.category_name', $direction)
+                        ->select('products.*');
+                }
+                return $query->orderBy($sort, $direction);
+            })
+            ->paginate(5);
+
+        return view('product.index', compact('products', 'sort', 'direction'));
     }
 
     /**
