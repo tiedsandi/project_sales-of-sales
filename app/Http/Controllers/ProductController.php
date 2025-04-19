@@ -31,9 +31,10 @@ class ProductController extends Controller
                 }
                 return $query->orderBy($sort, $direction);
             })
-            ->paginate(5);
+            ->paginate(5)
+            ->appends(['search' => $search, 'sort' => $sort, 'direction' => $direction]);
 
-        return view('product.index', compact('products', 'sort', 'direction'));
+        return view('product.index', compact('products', 'sort', 'direction', 'search'));
     }
 
     /**

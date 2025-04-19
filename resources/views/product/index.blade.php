@@ -22,13 +22,13 @@
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th><a href="{{ route('product.index', ['sort' => 'id', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">No</a></th>
-          <th><a href="{{ route('product.index', ['sort' => 'product_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Name</a></th>
-          <th><a href="{{ route('product.index', ['sort' => 'category_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Category</a></th>
+          <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'id', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">No</a></th>
+          <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'product_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Name</a></th>
+          <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'category_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Category</a></th>
           <th>Photo</th>
-          <th><a href="{{ route('product.index', ['sort' => 'product_price', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Price</a></th>
+          <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'product_price', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Price</a></th>
           <th>Description</th>
-          <th><a href="{{ route('product.index', ['sort' => 'is_active', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">Active</a></th>
+          <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'is_active', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Active</a></th>
           <th>Actions</th>
         </tr>
       </thead>
