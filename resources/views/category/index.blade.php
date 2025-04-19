@@ -1,4 +1,5 @@
 @extends('layouts.admin-layout')
+@extends('layouts.main')
 @section('page-title', 'Category')
 @section('title', 'Category')
 @section('content')
@@ -41,8 +42,8 @@
               <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
               <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline">
                 @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                @method('delete')
+                <button type="submit" class="btn btn-sm btn-danger btn-hapus" data-name="{{ $category->category_name }}">Delete</button>
               </form>
             </td>
           </tr>
@@ -61,4 +62,29 @@
 </section>
 @endsection
 
+@section('script')
+<!-- Script kamu -->
+<script>
+  $('.btn-hapus').click(function(e) {
+    e.preventDefault(); 
+    
+    var form = $(this).closest('form');
+    var categoryName = $(this).data('name');
 
+    Swal.fire({
+      title: `Delete "${categoryName}"?`,
+      text: "Are you sure you want to delete this category?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    });
+  });
+</script>
+
+@endsection

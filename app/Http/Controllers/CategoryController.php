@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,7 @@ class CategoryController extends Controller
         $search = $request->input('search');
         $categories = Category::when($search, function ($query, $search) {
             return $query->where('category_name', 'like', "%{$search}%");
-        })->orderBy('id')->paginate(5);
+        })->orderByDesc('id')->paginate(5);
 
         return view('category.index', compact('categories'));
     }
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -33,7 +34,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'is_active' => 'nullable|boolean',
+        ]);
+        $validatedData['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        try {
+            Category::create($validatedData);
+            Alert::success('Success', 'Category has been successfully created!');
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Failed to create category!');
+        }
+
+        return redirect()->route('category.index');
     }
 
     /**
@@ -49,7 +63,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('category.edit', compact('category'));
     }
 
     /**
@@ -57,7 +72,21 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'category_name' => 'required|string|max:255',
+            'is_active' => 'nullable|boolean',
+        ]);
+        $validatedData['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        try {
+            $category = Category::findOrFail($id);
+            $category->update($validatedData);
+            Alert::success('Success', 'Category has been successfully updated!');
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Failed to update category!');
+        }
+
+        return redirect()->route('category.index');
     }
 
     /**
@@ -65,6 +94,14 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
+            Alert::success('Success', 'Category has been successfully deleted!');
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Failed to delete category!');
+        }
+
+        return redirect()->route('category.index');
     }
 }
