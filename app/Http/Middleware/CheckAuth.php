@@ -17,10 +17,15 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            Alert::warning('Warning Title', 'Harus Login');
+        if (!Auth::check() && !$request->is('/')) {
+            Alert::error('Peringatan', 'Anda harus login terlebih dahulu.');
             return redirect('/');
         }
+
+        if (Auth::check() && $request->is('/')) {
+            return redirect('/dashboard');
+        }
+
 
         return $next($request);
     }

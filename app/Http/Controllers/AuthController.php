@@ -25,10 +25,10 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            Alert::warning('Warning Title', 'Warning Message');
+            Alert::success('Selamat Datang', 'Anda berhasil login kembali!');
             return redirect('dashboard');
         } else {
-            Alert::success('Success Title', 'Success Message');
+            Alert::toast('Email dan password salah!', 'error');
             return back()->withErrors(['error' => 'Login Gagal, Silahkan Coba Lagi'])->withInput();
         }
     }
@@ -36,6 +36,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+        Alert::toast('Anda berhasil logout!', 'success');
         return redirect()->to('/');
     }
 }

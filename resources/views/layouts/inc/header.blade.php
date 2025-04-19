@@ -16,7 +16,7 @@
         @if(auth()->check())
         Hi, {{ auth()->user()->name }}
         <a href="/logout" class="ms-2" >
-          Logout
+          Keluar
         </a>
         @else
         Guest
