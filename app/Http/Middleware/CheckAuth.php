@@ -18,7 +18,7 @@ class CheckAuth
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check() && !$request->is('/')) {
-            Alert::error('Peringatan', 'Anda harus login terlebih dahulu.');
+            Alert::error('Warning', 'You must log in first.');
             return redirect('/');
         }
 

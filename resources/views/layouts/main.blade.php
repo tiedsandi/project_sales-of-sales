@@ -29,6 +29,37 @@
   <!-- Template Main CSS File -->
   <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
 
+  <style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+        margin: 0;
+    }
+
+    .pagination .page-item {
+        margin: 0 5px;
+    }
+
+    .pagination .page-link {
+        color: #007bff;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+  </style>
 
 </head>
 

@@ -25,18 +25,18 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            Alert::success('Selamat Datang', 'Anda berhasil login kembali!');
+            Alert::success('Welcome Back', 'You have successfully logged in!');
             return redirect('dashboard');
         } else {
-            Alert::toast('Email dan password salah!', 'error');
-            return back()->withErrors(['error' => 'Login Gagal, Silahkan Coba Lagi'])->withInput();
+            Alert::toast('Incorrect email or password!', 'error');
+            return back()->withInput();
         }
     }
 
     public function logout()
     {
         Auth::logout();
-        Alert::toast('Anda berhasil logout!', 'success');
+        Alert::toast('You have successfully logged out!', 'success');
         return redirect()->to('/');
     }
 }

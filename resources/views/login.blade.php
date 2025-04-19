@@ -14,7 +14,7 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Point of Sales</h5>
-                    <p class="text-center small">Masukan Email dan Password</p>
+                    <p class="text-center small">Enter your Email and Password</p>
                   </div>
 
                   <form class="row g-3 needs-validation" novalidatefg method="post" action="/action-login">
@@ -24,7 +24,7 @@
                         <span class="text-danger small">*</span>
                         </label>
                       <div class="input-group has-validation">
-                        <input type="email" name="email" class="form-control" id="yourUsername" required>
+                        <input type="email" name="email" value="{{ old('email') }}" class="form-control" id="yourUsername" required>
                       </div>
                     </div>
 
@@ -32,11 +32,11 @@
                       <label for="yourPassword" class="form-label">Password 
                         <span class="text-danger small">*</span>
                       </label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" value="{{ old('password') }}" name="password" class="form-control" id="yourPassword" required>
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit" name="login">Masuk</button>
+                      <button class="btn btn-primary w-100" type="submit" name="login">Login</button>
                     </div>
                   </form>
 
