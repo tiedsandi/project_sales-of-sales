@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', [AuthController::class, 'login'])->middleware('checkAuth');
 Route::post('action-login', [AuthController::class, 'actionLogin']);
@@ -14,4 +15,5 @@ Route::group(['middleware' => 'checkAuth'], function () {
     return view('dashboard');
   });
   Route::resource('category', CategoryController::class);
+  Route::resource('product', ProductController::class);
 });
