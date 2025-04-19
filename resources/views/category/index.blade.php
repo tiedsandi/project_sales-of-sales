@@ -8,14 +8,16 @@
       <h3>Category List</h3>
       <a href="{{ route('category.create') }}" class="btn btn-primary">Add Category</a>
     </div>
-
     <form action="{{ route('category.index') }}" method="GET" class="mb-3">
       <div class="input-group">
-        <input type="text" name="search" class="form-control" placeholder="Search by name" value="{{ request('search') }}">
-        <button type="submit" class="btn btn-primary">Search</button>
+      <input type="text" name="search" class="form-control" placeholder="Search by name" value="{{ request('search') }}">
+      <button type="submit" class="btn btn-primary">Search</button>
+      @if(request('search'))
+        <a href="{{ route('category.index') }}" class="btn btn-secondary">Clear</a>
+      @endif
       </div>
     </form>
-    
+
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
@@ -52,7 +54,7 @@
       </tbody>
     </table>
     <div class="d-flex justify-content-center">
-      {{ $categories->links('pagination::bootstrap-5') }}
+      {{ $categories->appends(request()->query())->links('pagination::bootstrap-5') }}
     </div>
     
   </div>
