@@ -39,13 +39,13 @@
       </a>
       <ul id="forms-nav" class="nav-content collapse {{ Request::is('pos', 'pos-sale') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="/pos" class="nav-link {{ Request::is('pos') ? '' : 'collapsed' }}">
-            <i class="bi bi-circle"></i><span>POS</span>
+          <a href="/pos-sale" class="nav-link {{ Request::is('pos-sale') ? '' : 'collapsed' }}">
+            <i class="bi bi-circle"></i><span>Pos Sale</span>
           </a>
         </li>
         <li>
-          <a href="/pos-sale" class="nav-link {{ Request::is('pos-sale') ? '' : 'collapsed' }}">
-            <i class="bi bi-circle"></i><span>Pos Sale</span>
+          <a href="/pos" class="nav-link {{ Request::is('pos') ? '' : 'collapsed' }}">
+            <i class="bi bi-circle"></i><span>POS</span>
           </a>
         </li>
       </ul>

@@ -73,9 +73,7 @@
     </div>
   </div>
 </section>
-@endsection
 
-@section('script')
 <script>
   $('.btn-hapus').click(function(e) {
     e.preventDefault(); 
@@ -99,3 +97,4 @@
   });
 </script>
 @endsection
+
