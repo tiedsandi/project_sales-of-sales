@@ -17,6 +17,10 @@ Route::group(['middleware' => 'checkAuth'], function () {
   });
   Route::resource('category', CategoryController::class);
   Route::resource('product', ProductController::class);
+
   Route::get('pos-sale', [TransactionController::class, 'create']);
   Route::post('pos-sale', [TransactionController::class, 'store'])->name('pos-sale.store');
+
+  Route::resource('pos', TransactionController::class);
+  Route::get('print/{id}', [TransactionController::class, 'print'])->name('print');
 });

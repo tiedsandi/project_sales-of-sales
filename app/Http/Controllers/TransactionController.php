@@ -66,4 +66,19 @@ class TransactionController extends Controller
 
         return "{$prefix}-{$date}-" . str_pad($orderId, 6, '0', STR_PAD_LEFT);
     }
+
+
+    // pos page
+    public function index()
+    {
+        $orders = Order::paginate(5);
+        return view('pos.index', compact('orders'));
+    }
+
+    public function show(string $id)
+    {
+        //
+    }
+
+    public function print() {}
 }
