@@ -31,7 +31,7 @@ class CategorySeeder extends Seeder
             [
                 'id' => 3,
                 'category_name' => 'Minuman Dingin',
-                'is_active' => 1,
+                'is_active' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -45,7 +45,7 @@ class CategorySeeder extends Seeder
             [
                 'id' => 5,
                 'category_name' => 'Dessert',
-                'is_active' => 1,
+                'is_active' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -66,14 +66,14 @@ class CategorySeeder extends Seeder
             [
                 'id' => 8,
                 'category_name' => 'Asian Food',
-                'is_active' => 1,
+                'is_active' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 9,
                 'category_name' => 'Western Food',
-                'is_active' => 1,
+                'is_active' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

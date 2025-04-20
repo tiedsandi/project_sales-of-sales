@@ -14,8 +14,8 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
-        $products = Product::all();
+        $categories = Category::where('is_active', 1)->get();
+        $products = Product::where('is_active', 1)->get();
 
         return view('pos-sale', compact('categories', 'products'));
     }
@@ -26,7 +26,8 @@ class TransactionController extends Controller
         $request->validate([
             'cart_data' => 'required',
             'cash_received' => 'nullable|numeric|min:0',
-            'change' => 'nullable|numeric|min:0'
+            'change' => 'nullable|numeric|min:0',
+            'customer_name' => 'required|string|max:255',
         ]);
 
         $data = json_decode($request->cart_data, true);
@@ -42,7 +43,8 @@ class TransactionController extends Controller
             'order_date' => now(),
             'order_amount' => $data['total'],
             'order_change' => $request->change ?? 0,
-            'order_status' => $request->change ? 1 : 0
+            'order_status' => $request->change ? 1 : 0,
+            'customer_name' => $request->customer_name
         ]);
 
         foreach ($data['orders'] as $item) {
@@ -77,8 +79,33 @@ class TransactionController extends Controller
 
     public function show(string $id)
     {
-        //
+        $order = Order::with('orderDetails.product')->findOrFail($id);
+        // return $order;
+        return view('pos.show', compact('order'));
     }
 
     public function print() {}
+
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'cash_received' => 'required|numeric|min:0',
+        ]);
+
+        $order = Order::findOrFail($id);
+
+        if ($request->cash_received < $order->order_amount) {
+            Alert::error('Error', 'Insufficient payment amount.');
+            return back();
+        }
+
+        $order->update([
+            'order_change' => $request->cash_received - $order->order_amount,
+            'order_status' => 1, // Mark as paid
+        ]);
+
+        Alert::success('Success', 'Payment has been successfully processed.');
+        return redirect()->route('pos.index');
+    }
 }

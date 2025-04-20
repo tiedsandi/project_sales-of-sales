@@ -4,16 +4,23 @@
 
 @section('content')
 <section class="py-5 bg-white rounded">
-  <div class="container">
-    <h1 class="display-4 fw-bold text-center">Point of Sale</h1>
-    <div class="row">
-      <!-- Form Section -->
-      <div class="col-md-6">
-        <form id="pos-form">
-          @csrf
+  <form action="{{ route('pos-sale.store') }}" method="POST" id="transaction-form" >
+    @csrf
+    <div class="container">
+      <h1 class="display-4 fw-bold text-center">Point of Sale</h1>
+      <div class="row">
+        <!-- Form Section -->
+        <div class="col-12 col-md-6">
+          <div class="mb-4">
+            <label for="customer_name" class="form-label">
+              Customer Name
+              <span class="text-danger small">*</span>
+            </label>
+            <input type="text" name="customer_name" class="form-control" placeholder="Enter customer name (e.g., Joko)" required>
+          </div>
           <div class="mb-4">
             <label for="category" class="form-label">Category</label>
-            <select id="category" name="category" class="form-select" required>
+            <select id="category" name="category" class="form-select" >
               <option value="" disabled selected>Select a category</option>
               @foreach($categories as $category)
                 <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -22,26 +29,25 @@
           </div>
           <div class="mb-4">
             <label for="product" class="form-label">Product</label>
-            <select id="product" name="product" class="form-select" required disabled>
+            <select id="product" name="product" class="form-select"  disabled>
               <option value="" disabled selected>Select a product</option>
             </select>
           </div>
           <div class="mb-4">
             <label for="quantity" class="form-label">Quantity</label>
-            <input type="number" id="quantity" name="quantity" class="form-control" min="1" disabled required>
+            <input type="number" id="quantity" name="quantity" class="form-control" min="1" disabled >
           </div>
           <div class="mb-4">
             <label for="total" class="form-label">Total</label>
             <input type="text" id="total" name="total" class="form-control" readonly>
           </div>
-          <button type="button" id="add-to-cart" class="btn btn-secondary w-100 mb-3">Add to Cart</button>
-        </form>
-      </div>
+          <button type="button" id="add-to-cart" class="btn btn-secondary w-100 mb-3">Add to Cart</button>    
+        </div>
 
-      <!-- Cart Section -->
-      <div class="col-md-6">
-        <h2>Shopping Cart</h2>
-        <table class="table table-bordered">
+        <div class="col-12 col-md-6">
+          <h2>Shopping Cart</h2>
+          <div class="table-responsive">
+            <table class="table table-bordered">
           <thead>
             <tr>
               <th>Category</th>
@@ -59,20 +65,22 @@
               <td></td>
             </tr>
           </tfoot>
-        </table>
+            </table>
+          </div>
 
-        <button type="button" id="clear-cart" class="btn btn-warning w-100 mb-3 d-none">Clear Cart</button>
+          <button type="button" id="clear-cart" class="btn btn-warning w-100 mb-3 d-none">Clear Cart</button>
 
-        <form action="{{ route('pos-sale.store') }}" method="POST" id="transaction-form" class="d-none">
-          @csrf
-          <input type="hidden" id="cart-data" name="cart_data">
-          <input type="hidden" name="cash_received" id="cash-received">
-          <input type="hidden" name="change" id="change">
-          <button type="submit" class="btn btn-primary w-100">Submit Transaction</button>
-        </form>
+          <form action="{{ route('pos-sale.store') }}" method="POST" id="transaction-form" class="d-none">
+            @csrf
+            <input type="hidden" id="cart-data" name="cart_data">
+            <input type="hidden" name="cash_received" id="cash-received">
+            <input type="hidden" name="change" id="change">
+            <button type="submit" id="btn-submit" class="btn btn-primary w-100 d-none">Submit Transaction</button>
+        
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </section>
 
 <!-- Scripts -->
@@ -199,7 +207,7 @@ $(function() {
   function toggleCartActions() {
     const hasItems = cart.length > 0;
     $('#clear-cart').toggleClass('d-none', !hasItems);
-    $('#transaction-form').toggleClass('d-none', !hasItems);
+    $('#btn-submit').toggleClass('d-none', !hasItems);
   }
 
   function showError(message) {
@@ -265,6 +273,7 @@ $(function() {
       confirmButtonText: 'Pay',
       cancelButtonText: 'Cancel',
       inputAttributes: {
+        min: grandTotal,
         step: '0.01'
       },
       preConfirm: (payment) => {
