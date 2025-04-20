@@ -39,12 +39,17 @@
             <td>{{ $product->product_name }}</td>
             <td>{{ $product->category->category_name }}</td>
             <td>
-              @if($product->product_photo)
-                <img src="{{ asset('storage/' . $product->product_photo) }}" alt="{{ $product->product_name }}" width="50">
-              @else
-                <span>No Photo</span>
-              @endif
+                @if($product->product_photo)
+                    @if(Str::startsWith($product->product_photo, ['http://', 'https://']))
+                        <img src="{{ $product->product_photo }}" alt="{{ $product->product_name }}" width="50">
+                    @else
+                        <img src="{{ asset('storage/' . $product->product_photo) }}" alt="{{ $product->product_name }}" width="50">
+                    @endif
+                @else
+                    <span>No Image</span>
+                @endif
             </td>
+            
             <td>{{ number_format($product->product_price, 2) }}</td>
             <td>{{ $product->product_description }}</td>
             <td>

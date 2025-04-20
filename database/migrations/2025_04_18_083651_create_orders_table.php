@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('customer_name');
             $table->string('order_code');
-            $table->date('order_date');
+            $table->dateTime('order_date');
             $table->decimal('order_amount', 10, 2);
             $table->decimal('order_change', 10, 2);
             $table->tinyInteger('order_status')->default(0);

@@ -73,7 +73,7 @@ class TransactionController extends Controller
     // pos page
     public function index()
     {
-        $orders = Order::paginate(5);
+        $orders = Order::orderBy('id', 'desc')->paginate(5);
         return view('pos.index', compact('orders'));
     }
 

@@ -9,20 +9,27 @@
     <div class="row">
       <div class="col-12">
         <h2>Customer Information</h2>
-        <p><strong>Order Code:</strong> {{ $order->order_code }}</p>
-        <p><strong>Customer Name:</strong> {{ $order->customer_name }}</p>
-        <p><strong>Order Status:</strong> 
-          @if($order->order_status == 0)
-            <span class="badge bg-warning">Pending Payment</span>
-          @else
-            <span class="badge bg-success">Paid</span>
-          @endif
-        </p>
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Order Code:</strong> {{ $order->order_code }}</p>
+            <p><strong>Customer Name:</strong> {{ $order->customer_name }}</p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Order Date:</strong> {{ \Carbon\Carbon::parse($order->order_date)->format('d M Y H:i') }}</p>
+            <p><strong>Order Status:</strong> 
+              @if($order->order_status == 0)
+                <span class="badge bg-warning">Pending Payment</span>
+              @else
+                <span class="badge bg-success">Paid</span>
+              @endif
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="col-12">
         <h2>Order Details</h2>
-        <div class="table-responsive">
+        <div class="table-responsive" style="overflow-x: auto;">
           <table class="table table-bordered">
             <thead>
               <tr>

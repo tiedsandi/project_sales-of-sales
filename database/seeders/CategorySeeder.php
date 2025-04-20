@@ -104,56 +104,7 @@ class CategorySeeder extends Seeder
                 'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'id' => 14,
-                'category_name' => 'Sate dan Grill',
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 15,
-                'category_name' => 'Nasi dan Lauk',
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 16,
-                'category_name' => 'Burger',
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 17,
-                'category_name' => 'Pizza',
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 18,
-                'category_name' => 'Bakery',
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 19,
-                'category_name' => 'Coffee',
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 20,
-                'category_name' => 'Tea',
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
         ]);
     }
 }
