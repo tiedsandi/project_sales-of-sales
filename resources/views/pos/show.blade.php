@@ -78,7 +78,7 @@
           <p><strong>Change:</strong> Rp {{ number_format($order->order_change, 2) }}</p>
         </div>
         <div class="col-12 text-center">
-          <button onclick="window.print()" class="btn btn-success">Print Receipt</button>
+            <a href="{{ route('print', $order->id) }}" class="btn btn-success">Print Receipt</a>
         </div>
       @endif
     </div>

@@ -30,6 +30,8 @@ class TransactionController extends Controller
             'customer_name' => 'required|string|max:255',
         ]);
 
+
+
         $data = json_decode($request->cart_data, true);
 
         if (!$data || empty($data['orders'])) {
@@ -42,8 +44,8 @@ class TransactionController extends Controller
             'order_code' => $this->generateOrderCode($latestIdOrder),
             'order_date' => now(),
             'order_amount' => $data['total'],
-            'order_change' => $request->change ?? 0,
-            'order_status' => $request->change ? 1 : 0,
+            'order_change' => $request->change !== null ? $request->change : 0,
+            'order_status' => $request->cash_received !== null  ? 1 : 0,
             'customer_name' => $request->customer_name
         ]);
 
@@ -56,8 +58,11 @@ class TransactionController extends Controller
                 'order_subtotal' => $item['total'],
             ]);
         }
+        // return $request;
 
-        Alert::success('Success', 'Transaction has been successfully processed.');
+        if ($request->change === null && $request->change == 0) {
+            Alert::success('Success', 'Transaction has been successfully processed.');
+        }
         return redirect('/pos-sale');
     }
 
@@ -84,7 +89,12 @@ class TransactionController extends Controller
         return view('pos.show', compact('order'));
     }
 
-    public function print() {}
+    public function print(string $id)
+    {
+        $order = Order::with('orderDetails.product')->findOrFail($id);
+        // return $order;
+        return view('print', compact('order'));
+    }
 
 
     public function update(Request $request, string $id)

@@ -274,7 +274,6 @@ $(function() {
       cancelButtonText: 'Cancel',
       inputAttributes: {
         min: grandTotal,
-        step: '0.01'
       },
       preConfirm: (payment) => {
         payment = parseFloat(payment);
