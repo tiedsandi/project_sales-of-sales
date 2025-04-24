@@ -13,8 +13,8 @@
         <tr>
           <th>No</th>
           <th>Order ID</th>
-          <th>Customer Name</th>
           <th>Total Amount</th>
+          <th>Change</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
@@ -24,8 +24,8 @@
           <tr>
             <td>{{ $orders->firstItem() + $loop->iteration - 1 }}</td>
             <td>{{ $order->order_code }}</td>
-            <td>{{ $order->customer_name }}</td>
             <td>Rp. {{ number_format($order->order_amount, 2) }}</td>
+            <td>Rp. {{ number_format($order->order_change, 2) }}</td>
             <td>
               <span class="badge {{ $order->order_status == 1 ? 'bg-success' : 'bg-secondary' }}">
                 {{ $order->order_status == 1 ? 'Paid' : 'Unpaid' }}

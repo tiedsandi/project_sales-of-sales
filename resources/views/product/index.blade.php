@@ -39,6 +39,7 @@
             <td>{{ $products->firstItem() + $loop->iteration - 1 }}</td>
             <td>{{ $product->product_name }}</td>
             <td>{{ $product->category->category_name }}</td>
+            <td>{{ $product->product_qty }}</td>
             <td>
                 @if($product->product_photo)
                     @if(Str::startsWith($product->product_photo, ['http://', 'https://']))
@@ -52,7 +53,6 @@
             </td>
             
             <td>{{ number_format($product->product_price, 2) }}</td>
-            <td>{{ $product->product_qty }}</td>
             <td>{{ $product->product_description }}</td>
             <td>
               <span class="badge {{ $product->is_active == 1 ? 'bg-success' : 'bg-secondary' }}">

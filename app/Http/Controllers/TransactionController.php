@@ -13,15 +13,19 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $products = Product::where('is_active', 1)->get()->map(function ($product) {
-            return [
-                'id' => $product->id,
-                'name' => $product->product_name,
-                'price' => (int)$product->product_price,
-                'image' => $product->product_photo,
-                'option' => '',
-            ];
-        });
+        $products = Product::where('is_active', 1)
+            ->where('product_qty', '>', 0)
+            ->get()
+            ->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->product_name,
+                    'price' => (int)$product->product_price,
+                    'image' => $product->product_photo,
+                    'qty' => (int)$product->product_qty,
+                    'option' => '',
+                ];
+            });
         return view('pos-sale', compact('products'));
     }
 
@@ -50,6 +54,12 @@ class TransactionController extends Controller
         ]);
 
         foreach ($data as $item) {
+            $product = Product::find($item['productId']);
+            if ($product) {
+                $product->product_qty -= $item['qty'];
+                $product->save();
+            }
+
             OrderDetail::create([
                 'order_id' => $order->id,
                 'product_id' => $item['productId'],

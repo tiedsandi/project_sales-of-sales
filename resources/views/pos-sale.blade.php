@@ -346,21 +346,33 @@
               return this.products.filter((p) => !rg || p.name.match(rg));
           },
           addToCart(product) {
-              const index = this.findCartIndex(product);
-              if (index === -1) {
-                  this.cart.push({
-                      productId: product.id,
-                      image: product.image,
-                      name: product.name,
-                      price: product.price,
-                      option: product.option,
-                      qty: 1,
-                  });
-              } else {
-                  this.cart[index].qty += 1;
-              }
-              this.beep();
-              this.updateChange();
+            const index = this.findCartIndex(product);
+            const maxQty = product.qty || 0;
+
+            if (index === -1) {
+                if (maxQty < 1) {
+                    alert("Stok habis!");
+                    return;
+                }
+                this.cart.push({
+                    productId: product.id,
+                    image: product.image,
+                    name: product.name,
+                    price: product.price,
+                    option: product.option,
+                    qty: 1,
+                });
+            } else {
+                const currentQty = this.cart[index].qty;
+                if (currentQty + 1 > maxQty) {
+                    alert("Jumlah melebihi stok!");
+                    return;
+                }
+                this.cart[index].qty += 1;
+            }
+
+            this.beep();
+            this.updateChange();
           },
           findCartIndex(product) {
               return this.cart.findIndex((p) => p.productId === product.id);
@@ -369,10 +381,17 @@
               const index = this.cart.findIndex(
                   (i) => i.productId === item.productId
               );
-              if (index === -1) {
+              if (index === -1) return;
+
+              const product = this.products.find(p => p.id === item.productId);
+              const maxQty = product?.option?.qty || 0;
+              const afterAdd = item.qty + qty;
+
+              if (afterAdd > maxQty) {
+                  alert("Jumlah melebihi stok!");
                   return;
               }
-              const afterAdd = item.qty + qty;
+
               if (afterAdd === 0) {
                   this.cart.splice(index, 1);
                   this.clearSound();
