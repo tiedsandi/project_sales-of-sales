@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Role;
+use App\Models\UserRole;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -31,7 +33,7 @@ class CategorySeeder extends Seeder
             [
                 'id' => 3,
                 'category_name' => 'Minuman Dingin',
-                'is_active' => 0,
+                'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -45,7 +47,7 @@ class CategorySeeder extends Seeder
             [
                 'id' => 5,
                 'category_name' => 'Dessert',
-                'is_active' => 0,
+                'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -66,14 +68,14 @@ class CategorySeeder extends Seeder
             [
                 'id' => 8,
                 'category_name' => 'Asian Food',
-                'is_active' => 0,
+                'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 9,
                 'category_name' => 'Western Food',
-                'is_active' => 0,
+                'is_active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -102,6 +104,54 @@ class CategorySeeder extends Seeder
                 'id' => 13,
                 'category_name' => 'Traditional Indonesian Food',
                 'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        ]);
+
+        Role::insert([
+            [
+                'id' => 1,
+                'name' => 'Administrator',
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'name' => 'Kasir',
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 3,
+                'name' => 'Pimpinan',
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        ]);
+
+        UserRole::insert([
+            [
+                'id' => 1,
+                'user_id' => 1,
+                'role_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'user_id' => 1,
+                'role_id' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 3,
+                'user_id' => 1,
+                'role_id' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

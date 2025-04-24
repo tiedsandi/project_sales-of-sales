@@ -65,7 +65,14 @@
                   :title="product.name"
                   x-on:click="addToCart(product)"
                 >
-                  <img :src="{{ asset('storage/' . product.image) }}" :alt="product.name" >
+                  <img
+                  :src="product.image.startsWith('http://') || product.image.startsWith('https://') 
+                          ? product.image 
+                          : (product.image ? '/storage/' + product.image : '')"
+                  :alt="product.name"
+                  v-if="product.image"
+                />
+              
                   <div class="flex pb-3 px-3 text-sm mt-3">
                     <p class="flex-grow truncate mr-1" x-text="product.name"></p>
                     <p class="nowrap font-semibold" x-text="priceFormat(product.price)"></p>
@@ -114,7 +121,14 @@
             <div class="flex-1 w-full px-4 overflow-auto">
               <template x-for="item in cart" :key="item.productId">
                 <div class="select-none mb-3 bg-blue-gray-50 rounded-lg w-full text-blue-gray-700 py-2 px-2 flex justify-center">
-                  <img :src="item.image" alt="" class="rounded-lg h-10 w-10 bg-white shadow mr-2">
+                    <img
+                    :src="item.image.startsWith('http://') || item.image.startsWith('https://') 
+                            ? item.image 
+                            : (item.image ? '/storage/' + item.image : '')"
+                    :alt="item.name"
+                    v-if="item.image"
+                    class="rounded-lg h-10 w-10 bg-white shadow mr-2"
+                  />
                   <div class="flex-grow">
                     <h5 class="text-sm" x-text="item.name"></h5>
                     <p class="text-xs block" x-text="priceFormat(item.price)"></p>

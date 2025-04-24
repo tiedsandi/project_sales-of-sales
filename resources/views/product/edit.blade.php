@@ -49,6 +49,13 @@
       @enderror
     </div>
     <div class="mb-3">
+      <label for="product_qty" class="form-label">Product Price <span class="text-danger">*</span></label>
+      <input type="number" name="product_qty" id="product_qty" class="form-control" placeholder="Enter product price" value="{{ old('product_qty', $product->product_qty) }}">
+      @error('product_qty')
+        <div class="text-danger small">{{ $message }}</div>
+      @enderror
+    </div>
+    <div class="mb-3">
       <label for="product_description" class="form-label">Product Description</label>
       <textarea name="product_description" id="product_description" class="form-control" rows="4" placeholder="Enter product description">{{ old('product_description', $product->product_description) }}</textarea>
       @error('product_description')

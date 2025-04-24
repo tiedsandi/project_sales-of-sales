@@ -15,6 +15,7 @@ class Product extends Model
         'product_name',
         'product_photo',
         'product_price',
+        'product_qty',
         'product_description',
         'is_active'
     ];

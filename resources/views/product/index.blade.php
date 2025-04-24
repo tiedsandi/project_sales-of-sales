@@ -25,6 +25,7 @@
           <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'id', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">No</a></th>
           <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'product_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Name</a></th>
           <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'category_name', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Category</a></th>
+          <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'product_qty', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Quantity</a></th>
           <th>Photo</th>
           <th><a href="{{ route('product.index', array_merge(request()->query(), ['sort' => 'product_price', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">Price</a></th>
           <th>Description</th>
@@ -51,6 +52,7 @@
             </td>
             
             <td>{{ number_format($product->product_price, 2) }}</td>
+            <td>{{ $product->product_qty }}</td>
             <td>{{ $product->product_description }}</td>
             <td>
               <span class="badge {{ $product->is_active == 1 ? 'bg-success' : 'bg-secondary' }}">

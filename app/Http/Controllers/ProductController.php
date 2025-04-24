@@ -105,6 +105,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'product_name' => 'required|string|max:255',
             'product_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'product_qty' => 'required|integer|min:0',
             'product_price' => 'required|numeric|min:0',
             'product_description' => 'nullable|string',
             'is_active' => 'nullable|boolean',
