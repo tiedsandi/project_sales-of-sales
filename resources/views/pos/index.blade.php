@@ -36,7 +36,7 @@
               <i class="bi bi-eye"></i>
               </a>
               @if($order->order_status == 1)
-              <a href="{{route('print', $order->id)}}" class="btn btn-sm btn-success">
+              <a href="{{route('print', $order->id)}}" class="btn btn-sm btn-success" target="_blank">
                 <i class="bi bi-printer"></i>
               </a>
               @endif

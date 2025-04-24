@@ -11,8 +11,7 @@ class Order extends Model
         'order_date',
         'order_amount',
         'order_change',
-        'order_status',
-        'customer_name'
+        'order_status'
     ];
 
     public function orderDetails()

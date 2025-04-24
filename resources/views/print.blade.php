@@ -84,6 +84,7 @@
         margin: 0;
         padding: 0;
         color: #000;
+        width: 80mm;
       }
 
       .wrapper {

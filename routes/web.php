@@ -22,5 +22,16 @@ Route::group(['middleware' => 'checkAuth'], function () {
   Route::post('pos-sale', [TransactionController::class, 'store'])->name('pos-sale.store');
 
   Route::resource('pos', TransactionController::class);
+});
+
+Route::middleware(['role:Kasir'])->group(function () {
   Route::get('print/{id}', [TransactionController::class, 'print'])->name('print');
 });
+
+
+
+// Route::middleware('role:admin')->group(function () {
+//   Route::get('/test', function () {
+//       return view('hello-world'); // mengembalikan view 'hello-world'
+//   });
+// });

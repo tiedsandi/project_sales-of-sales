@@ -8,7 +8,8 @@
   <title> @yield('page-title')</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  <meta name="csrf-token">
+  
   <!-- Favicons -->
   <link href="{{asset('assets/img/favicon.png')}}" rel="icon">
   <link href="{{asset('assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
@@ -16,6 +17,11 @@
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+  <script src="https://unpkg.com/idb/build/iife/index-min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js"></script>
 
   <!-- Vendor CSS Files -->
   <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -28,6 +34,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+
 
   <style>
     .pagination {
@@ -59,6 +66,8 @@
         color: white;
         border-color: #007bff;
     }
+
+    
   </style>
 
 </head>
@@ -87,8 +96,6 @@
   <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 
 </body>
 

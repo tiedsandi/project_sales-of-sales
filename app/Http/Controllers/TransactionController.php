@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -14,55 +13,54 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $categories = Category::where('is_active', 1)->get();
-        $products = Product::where('is_active', 1)->get();
-
-        return view('pos-sale', compact('categories', 'products'));
+        $products = Product::where('is_active', 1)->get()->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->product_name,
+                'price' => (int)$product->product_price,
+                'image' => $product->product_photo,
+                'option' => '',
+            ];
+        });
+        return view('pos-sale', compact('products'));
     }
 
 
     public function store(Request $request)
     {
+        // return $request->all();
         $request->validate([
-            'cart_data' => 'required',
-            'cash_received' => 'nullable|numeric|min:0',
-            'change' => 'nullable|numeric|min:0',
-            'customer_name' => 'required|string|max:255',
+            'cart' => 'required',
+            'cash' => 'required|numeric|min:0',
+            'total' => 'required|numeric|min:0',
+            'change' => 'required|numeric|min:0',
         ]);
 
+        $data = json_decode($request->cart, true);
 
-
-        $data = json_decode($request->cart_data, true);
-
-        if (!$data || empty($data['orders'])) {
-            Alert::error('Error', 'Cart is empty.');
-            return back();
-        }
 
         $latestIdOrder = Order::max('id') + 1;
         $order = Order::create([
             'order_code' => $this->generateOrderCode($latestIdOrder),
             'order_date' => now(),
-            'order_amount' => $data['total'],
-            'order_change' => $request->change !== null ? $request->change : 0,
-            'order_status' => $request->cash_received !== null  ? 1 : 0,
-            'customer_name' => $request->customer_name
+            'order_amount' => $request->total,
+            'order_change' =>  $request->change,
+            'order_status' =>  1,
+            'customer_name' => "John Doe",
         ]);
 
-        foreach ($data['orders'] as $item) {
+        foreach ($data as $item) {
             OrderDetail::create([
                 'order_id' => $order->id,
                 'product_id' => $item['productId'],
-                'qty' => $item['quantity'],
+                'qty' => $item['qty'],
                 'order_price' => $item['price'],
-                'order_subtotal' => $item['total'],
+                'order_subtotal' => $item['qty'] * $item['price'],
             ]);
         }
         // return $request;
 
-        if ($request->change === null && $request->change == 0) {
-            Alert::success('Success', 'Transaction has been successfully processed.');
-        }
+        Alert::success('Success', 'Transaction has been successfully processed.');
         return redirect('/pos-sale');
     }
 
