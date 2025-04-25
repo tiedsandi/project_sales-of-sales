@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [AuthController::class, 'login'])->middleware('checkAuth');
 Route::post('action-login', [AuthController::class, 'actionLogin']);
@@ -23,12 +24,9 @@ Route::group(['middleware' => 'checkAuth'], function () {
   Route::resource('category', CategoryController::class);
   Route::resource('product', ProductController::class);
 
-
-  Route::resource('pos', TransactionController::class);
-});
-
-Route::middleware(['role:Kasir'])->group(function () {
   Route::get('print/{id}', [TransactionController::class, 'print'])->name('print');
+  Route::resource('users', UserController::class);
+  Route::resource('pos', TransactionController::class);
 });
 
 

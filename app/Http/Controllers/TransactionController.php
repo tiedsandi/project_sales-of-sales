@@ -103,9 +103,12 @@ class TransactionController extends Controller
                     ->whereMonth('order_date', $date->month);
             }
 
+            // Salin query untuk laporan (sebelum paginate)
             $reportQuery = clone $query;
+
             $orders = $query->latest()->paginate(10)->appends($request->all());
 
+            // Hitung total dan rata-rata
             $report = [
                 'total_orders' => $reportQuery->count(),
                 'total_amount' => $reportQuery->sum('order_amount'),
