@@ -2,6 +2,52 @@
 @extends('layouts.main')
 @section('page-title', 'Order')
 @section('content')
+
+@anyrole(['Pimpinan','Administrator'])
+  <section class="bg-white p-4 rounded mb-4">
+    <form method="GET" action="{{ route('pos.index') }}">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-3">
+          <label for="type" class="form-label">Jenis Laporan</label>
+          <select name="type" id="type" class="form-select">
+            <option value="daily" {{ request('type') == 'daily' ? 'selected' : '' }}>Harian</option>
+            <option value="weekly" {{ request('type') == 'weekly' ? 'selected' : '' }}>Mingguan</option>
+            <option value="monthly" {{ request('type') == 'monthly' ? 'selected' : '' }}>Bulanan</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="date" class="form-label">Tanggal Acuan</label>
+          <input type="date" name="date" id="date" class="form-control" value="{{ request('date') ?? date('Y-m-d') }}">
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary w-100">Tampilkan</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  @if(isset($report))
+  <section class="bg-light p-4 rounded mb-4">
+    <h4>Laporan Penjualan - {{ ucfirst(request('type')) }} ({{ request('date') }})</h4>
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between">
+        Total Transaksi
+        <span>{{ $report['total_orders'] }}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between">
+        Total Pendapatan
+        <span>Rp. {{ number_format($report['total_amount'], 2) }}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between">
+        Rata-rata Transaksi
+        <span>Rp. {{ number_format($report['average'], 2) }}</span>
+      </li>
+    </ul>
+  </section>
+  @endif
+@endanyrole
+
+
 <section class="py-5 text-center bg-white rounded">
   <div class="container">
     <div class="d-flex justify-content-between mb-3">

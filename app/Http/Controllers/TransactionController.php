@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -41,7 +42,6 @@ class TransactionController extends Controller
         ]);
 
         $data = json_decode($request->cart, true);
-
 
         $latestIdOrder = Order::max('id') + 1;
         $order = Order::create([
@@ -84,8 +84,38 @@ class TransactionController extends Controller
 
 
     // pos page
-    public function index()
+    public function index(Request $request)
     {
+        if (auth()->user()->hasRole('Pimpinan') || auth()->user()->hasRole('Administrator')) {
+            $query = Order::query();
+
+            $type = $request->input('type', 'daily');
+            $date = $request->input('date', Carbon::now()->toDateString());
+            $date = Carbon::parse($date);
+
+            // Filter berdasarkan tipe laporan
+            if ($type === 'daily') {
+                $query->whereDate('order_date', $date);
+            } elseif ($type === 'weekly') {
+                $query->whereBetween('order_date', [$date->startOfWeek(), $date->endOfWeek()]);
+            } elseif ($type === 'monthly') {
+                $query->whereYear('order_date', $date->year)
+                    ->whereMonth('order_date', $date->month);
+            }
+
+            $reportQuery = clone $query;
+            $orders = $query->latest()->paginate(10)->appends($request->all());
+
+            $report = [
+                'total_orders' => $reportQuery->count(),
+                'total_amount' => $reportQuery->sum('order_amount'),
+                'average' => $reportQuery->avg('order_amount') ?? 0,
+            ];
+
+            return view('pos.index', compact('orders', 'report'));
+        }
+
+        // Jika bukan pimpinan, tampilkan list order biasa
         $orders = Order::orderBy('id', 'desc')->paginate(5);
         return view('pos.index', compact('orders'));
     }

@@ -30,7 +30,7 @@ class RoleMiddleware
         if (!in_array($selectedRole, $roles)) {
 
             Alert::error('Warning', 'Unauthorized access.');
-            abort(403, 'Unauthorized.');
+            return redirect('/dashboard');
         }
 
         return $next($request);

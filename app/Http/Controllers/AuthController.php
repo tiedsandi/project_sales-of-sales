@@ -38,7 +38,15 @@ class AuthController extends Controller
             session(['selected_role' => $user->roles->firstWhere('id', $selectedRoleId)->name]);
 
             Alert::success('Welcome Back', 'You have successfully logged in!');
-            return redirect('dashboard');
+            // return redirect('dashboard');
+
+            $selectedRole = session('selected_role');
+
+            if ($selectedRole == 'Administrator' || $selectedRole == 'Pimpinan') {
+                return redirect('dashboard');
+            } elseif ($selectedRole == 'Kasir') {
+                return redirect('pos-sale');
+            }
         } else {
             Alert::toast('Incorrect email or password!', 'error');
             return back()->withInput();

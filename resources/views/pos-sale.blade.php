@@ -6,8 +6,6 @@
 <section class="bg-blue-gray-50" x-data="initApp()" ">
   <!-- noprint-area -->
   <div class="hide-print flex flex-row  antialiased text-blue-gray-800" style="height: 86vh;">
-
-
     <!-- page content -->
     <div class="flex-grow flex">
       <!-- store menu -->
@@ -71,8 +69,8 @@
                           : (product.image ? '/storage/' + product.image : '')"
                   :alt="product.name"
                   v-if="product.image"
+                   class="rounded-lg h-48 w-full bg-white shadow object-cover"
                 />
-              
                   <div class="flex pb-3 px-3 text-sm mt-3">
                     <p class="flex-grow truncate mr-1" x-text="product.name"></p>
                     <p class="nowrap font-semibold" x-text="priceFormat(product.price)"></p>
@@ -129,6 +127,7 @@
                     v-if="item.image"
                     class="rounded-lg h-10 w-10 bg-white shadow mr-2"
                   />
+                  {{-- '{{ asset('storage/') }}/' + item.image --}}
                   <div class="flex-grow">
                     <h5 class="text-sm" x-text="item.name"></h5>
                     <p class="text-xs block" x-text="priceFormat(item.price)"></p>
@@ -140,7 +139,7 @@
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                         </svg>
                       </button>
-                      <input x-model.number="item.qty" type="text" class="bg-white rounded-lg text-center shadow focus:outline-none focus:shadow-lg text-sm">
+                      <input x-model.number="item.qty" :max="item.maxQty"  @input="checkQty(item)" type="text" class="bg-white rounded-lg text-center shadow focus:outline-none focus:shadow-lg text-sm">
                       <button x-on:click="addQty(item, 1)" class="rounded-lg text-center py-1 text-white bg-blue-gray-600 hover:bg-blue-gray-700 focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-3 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -325,7 +324,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   
-
   function initApp() {
       const app = {
           db: null,
@@ -378,28 +376,28 @@
               return this.cart.findIndex((p) => p.productId === product.id);
           },
           addQty(item, qty) {
-              const index = this.cart.findIndex(
-                  (i) => i.productId === item.productId
-              );
-              if (index === -1) return;
+            const index = this.cart.findIndex(
+                (i) => i.productId === item.productId
+            );
+            if (index === -1) return;
 
-              const product = this.products.find(p => p.id === item.productId);
-              const maxQty = product?.option?.qty || 0;
-              const afterAdd = item.qty + qty;
+            const product = this.products.find(p => p.id === item.productId);
+            const maxQty = product?.qty || 0;
+            const afterAdd = item.qty + qty;
 
-              if (afterAdd > maxQty) {
-                  alert("Jumlah melebihi stok!");
-                  return;
-              }
+            if (afterAdd > maxQty) {
+                alert("Jumlah melebihi stok!");
+                return;
+            }
 
-              if (afterAdd === 0) {
-                  this.cart.splice(index, 1);
-                  this.clearSound();
-              } else {
-                  this.cart[index].qty = afterAdd;
-                  this.beep();
-              }
-              this.updateChange();
+            if (afterAdd === 0) {
+                this.cart.splice(index, 1);
+                this.clearSound();
+            } else {
+                this.cart[index].qty = afterAdd;
+                this.beep();
+            }
+            this.updateChange();
           },
           addCash(amount) {
               this.cash = (this.cash || 0) + amount;
@@ -488,6 +486,16 @@
 
               this.clear();
           },
+          checkQty(item) {
+              const product = this.products.find(p => p.id === item.productId);
+              const maxQty = product?.qty || 0;
+
+              if (item.qty > maxQty) {
+                  alert("Jumlah melebihi stok!");
+                  item.qty = maxQty; // Reset ke jumlah maksimum stok
+              }
+          }
+
       };
 
       return app;
