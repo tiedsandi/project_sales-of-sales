@@ -1,6 +1,6 @@
 @extends('layouts.main-layout')
-@section('page-name', 'POS - Category')
-@section('title', 'Category - Index')
+@section('page-name', 'POS - Report')
+@section('title', 'Report - Index')
 
 @section('main-content')
 <div class="card">
@@ -41,7 +41,7 @@
       </thead>
       <tbody>
         @foreach ($orders as $order)
-          <tr data-href="{{ route('login', $order->id) }}" >
+          <tr data-href="{{ route('reportDetail', $order->id) }}" >
             <td>{{ $order->order_code }}</td>
             <td>{{ $order->formatted_amount }}</td>
             <td>{{ $order->order_date }}</td>
@@ -93,15 +93,13 @@
           },
           customize: function (xlsx) {
             var sheet = xlsx.xl.worksheets['sheet1.xml'];
-            // Mengubah style cell untuk header
             $('row c[r^="C"]').each(function () {
               $(this).attr('s', '2');
             });
             
-            // Menambahkan format angka pada kolom Amount
             $('row c[r^="D"]').each(function () {
               $(this).attr('t', 'n');
-              $(this).attr('s', '18'); // Add currency format
+              $(this).attr('s', '18'); 
             });
           }
         },
@@ -184,9 +182,7 @@
       function (settings, data, dataIndex) {
         var startDate = $('#start-date').val();
         var endDate = $('#end-date').val();
-        
-        // Ambil data order date langsung dari DataTable
-        var orderDate = data[2];  // Kolom ketiga (index 2) adalah Order Date
+        var orderDate = data[2]; 
         
         if (startDate) startDate = new Date(startDate);
         if (endDate) endDate = new Date(endDate);
@@ -216,15 +212,12 @@
     });
 
     $('#reset-filter').click(function () {
-      // Reset filter input fields
       $('#start-date').val('');
       $('#end-date').val('');
       $('#preset-filter').val('');
       
-      // Reset the search and column filters in DataTable
       table.search('').columns().search('').draw();
       
-      // Reset any other datepicker or filter logic if necessary
       $("#start-date").datepicker("setDate", null);
       $("#end-date").datepicker("setDate", null);
     });

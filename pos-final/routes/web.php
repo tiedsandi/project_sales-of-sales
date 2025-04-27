@@ -16,6 +16,7 @@ Route::post('/action-login', [LoginController::class, 'actionLogin']);
 Route::group(['middleware' => 'auth'], function () {
     Route::post('logout', [LoginController::class, 'logout']);
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::group(['middleware' => 'role:1'], function () {
         Route::resource('users', UserController::class);
         Route::resource('category', CategoryController::class);
@@ -24,12 +25,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:2'], function () {
         Route::get('/report', [TransactionController::class, 'report'])->name('report');
+        Route::get('/report/{id}', [TransactionController::class, 'reportDetail'])->name('reportDetail');
         Route::get('/report/print', [TransactionController::class, 'print'])->name('report.print');
     });
 
-    Route::get('/stock', [ProductController::class, 'stock'])->name('stock');
     Route::group(['middleware' => 'role:3'], function () {
         Route::get('/kasir', [TransactionController::class, 'kasir'])->name('kasir');
         Route::post('/kasir', [TransactionController::class, 'kasirPost'])->name('kasir.post');
+    });
+
+    Route::group(['middleware' => 'role:2,3'], function () {
+        Route::get('/stock', [ProductController::class, 'stock'])->name('stock');
     });
 });

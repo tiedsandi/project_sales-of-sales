@@ -88,9 +88,17 @@ class TransactionController extends Controller
 
     public function report()
     {
-        $orders = Order::get();
+        // orderBy('category_name', 'asc')
+        $orders = Order::orderBy('order_date', 'desc')->get();
         // return $orders;
         return view('pimpinan.laporan', compact('orders'));
+    }
+
+    public function reportDetail(string $id)
+    {
+        $order = Order::with('orderDetails.product')->findOrFail($id);
+        // return $order;
+        return view('pimpinan.detail-laporan', compact('order'));
     }
 
     public function print()

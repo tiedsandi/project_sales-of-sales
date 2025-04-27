@@ -17,6 +17,19 @@ class OrderDetail extends Model
         'order_subtotal',
     ];
 
+    protected $appends = ['formatted_price', 'formatted_subtotal'];
+
+    public function getFormattedPriceAttribute(): string
+    {
+        return 'Rp. ' . number_format($this->order_price, 0, ',', '.');
+    }
+
+    public function getFormattedSubtotalAttribute(): string
+    {
+        return 'Rp. ' . number_format($this->order_subtotal, 0, ',', '.');
+    }
+
+
     public function order()
     {
         return $this->belongsTo(Order::class);

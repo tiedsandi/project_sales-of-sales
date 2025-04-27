@@ -33,4 +33,9 @@ class Order extends Model
     {
         return 'Rp. ' . number_format($this->order_change, 0, ',', '.');
     }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }
