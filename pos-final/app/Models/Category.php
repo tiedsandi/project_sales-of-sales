@@ -10,4 +10,9 @@ class Category extends Model
         "category_name",
         "is_deleted",
     ];
+
+    public function scopeNotDeleted($query)
+    {
+        return $query->where('is_deleted',);
+    }
 }
