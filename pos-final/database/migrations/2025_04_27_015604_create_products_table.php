@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('product_qty')->default(0);
             $table->decimal('product_price', 10, 2);
             $table->text('product_description')->nullable();
+            $table->smallInteger('is_deleted')->default(0);
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
         });
