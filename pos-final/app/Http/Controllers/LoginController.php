@@ -19,10 +19,14 @@ class LoginController extends Controller
 
 
         if (Auth::attempt($credentials)) {
-            Alert::success('Selamat Datang Kembali', 'Anda berhasil masuk!');
-            return redirect('dashboard');
+            Alert::success('Welcome back', 'Success Login');
+
+            if (auth()->user()->role_id == 3) {
+                return redirect('kasir');
+            }
+            return redirect('/');
         } else {
-            Alert::toast('Email atau kata sandi salah!', 'error');
+            Alert::toast('Email and Password are wrong', 'error');
             return back()->withInput();
         }
     }
@@ -30,7 +34,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        Alert::toast('Anda berhasil keluar!', 'success');
+        Alert::toast('Success Logout!', 'success');
         return redirect()->to('/');
     }
 }

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([RolesTableSeeder::class]);
+        $this->call([RolesTableSeeder::class, CategoryProductSeeder::class, TransactionSeeder::class]);
 
         User::factory()->create([
             'name' => 'Admin',

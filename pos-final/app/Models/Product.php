@@ -21,6 +21,18 @@ class Product extends Model
         'is_active'
     ];
 
+    protected $appends = ['category_name', 'formatted_price'];
+
+    public function getFormattedPriceAttribute(): string
+    {
+        return 'Rp. ' . number_format($this->product_price, 0, ',', '.');
+    }
+
+    public function getCategoryNameAttribute(): string
+    {
+        return $this->category->category_name;
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -29,5 +41,9 @@ class Product extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+    public function scopeNotDelete($query)
+    {
+        return $query->where('is_deleted', false);
     }
 }

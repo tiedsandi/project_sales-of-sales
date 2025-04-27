@@ -7,7 +7,7 @@
       <div class="col-lg-12">
           <div class="card">
               <div class="card-body">
-                  <h5 class="card-title">Add New Users</h5>
+                  <h5 class="card-title">Add New User</h5>
                   <form action="{{ route('users.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
@@ -43,7 +43,7 @@
                       <select name="role_id" id="role" class="form-select">
                       <option value="" disabled selected>Choose One</option>
                       @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">{{ $role->nama }}</option>
+                        <option value="{{ $role->id }}">{{ $role->name }}</option>
                       @endforeach
                       </select>
                       @error('role_id')
@@ -52,7 +52,7 @@
                     </div>
                     <div class="d-flex justify-content-end">
                       <a href="{{ route('users.index') }}" class="btn btn-outline-secondary me-2" style="padding: 0.5rem 1rem; height: 2.5rem; line-height: 1.5rem;">Cancel</a>
-                      <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem; height: 2.5rem; line-height: 1.5rem;">Buat</button>
+                      <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem; height: 2.5rem; line-height: 1.5rem;">Create</button>
                     </div>
                   </form>
               </div>

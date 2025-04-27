@@ -20,7 +20,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = DB::table('roles')
-            ->where('nama', '!=', 'Administrator')
+            ->where('name', '!=', 'Administrator')
             ->get();
 
         return view('admin.users.create', compact('roles'));
@@ -65,10 +65,10 @@ class UserController extends Controller
             return redirect()->route('users.index');
         }
         $roles = DB::table('roles')
-            ->where('nama', '!=', 'Administrator')
+            ->where('name', '!=', 'Administrator')
             ->get();
 
-        return view('admin.users.update', compact('roles', 'user'));
+        return view('admin.users.edit', compact('roles', 'user'));
     }
 
     public function update(Request $request, $id)
@@ -100,6 +100,21 @@ class UserController extends Controller
         ]);
 
         Alert::success('Success', 'User updated successfully');
+
+        return redirect()->route('users.index');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            Alert::error('Error', 'User not found');
+            return redirect()->route('user.index');
+        }
+
+        $user->delete();
+
+        Alert::success('Success', 'User deleted successfully');
 
         return redirect()->route('users.index');
     }

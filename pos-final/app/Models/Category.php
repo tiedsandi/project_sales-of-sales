@@ -11,8 +11,8 @@ class Category extends Model
         "is_deleted",
     ];
 
-    public function scopeNotDeleted($query)
+    public function scopeNotDelete($query)
     {
-        return $query->where('is_deleted',);
+        return $query->where('is_deleted', false);
     }
 }

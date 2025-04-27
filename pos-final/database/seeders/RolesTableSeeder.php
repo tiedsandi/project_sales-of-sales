@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class RolesTableSeeder extends Seeder
 {
@@ -14,9 +16,28 @@ class RolesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('roles')->insert([
-            ['nama' => 'Administrator'],
-            ['nama' => 'Pimpinan'],
-            ['nama' => 'Kasir'],
+            ['name' => 'Administrator'],
+            ['name' => 'Pimpinan'],
+            ['name' => 'Kasir'],
+        ]);
+
+        User::insert([
+            [
+                'name' => 'Pemimpinan',
+                'email' => 'pimpinan@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role_id' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Kasir',
+                'email' => 'kasir@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role_id' => 3,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

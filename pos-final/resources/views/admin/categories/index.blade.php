@@ -1,6 +1,6 @@
 @extends('layouts.main-layout')
-@section('page-name', 'POS - User')
-@section('title', 'User - Index')
+@section('page-name', 'POS - Category')
+@section('title', 'Category - Index')
 
 @section('main-content')
 <section class="section">
@@ -11,7 +11,7 @@
           <div class="pagetitle mt-4 mb-4">
             <h1 align="center" style="text-transform: uppercase; font-weight: bold">@yield('title')</h1>
             <div align="right">
-              <a  href="{{ route('users.create') }}" class="btn btn-primary">Add User</a>
+              <a  href="{{ route('category.create') }}" class="btn btn-primary">Add Category</a>
             </div>
           </div>
 
@@ -19,26 +19,22 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($datas as $user)
+              @foreach ($datas as $category)
                 <tr>
-                  <td>{{ $user->name }}</td>
-                  <td>{{ $user->email }}</td>
-                  <td>{{ $user->role_name }}</td>
+                  <td>{{ $category->category_name }}</td>
                   <td>
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-secondary">
+                    <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-secondary">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <form class="d-inline" action="{{ route('users.destroy', $user->id) }}"
+                    <form class="d-inline" action="{{ route('category.destroy', $category->id) }}"
                         method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-hapus btn-danger" data-name="{{ $user->name }}">
+                        <button type="submit" class="btn btn-sm btn-hapus btn-danger" data-name="{{  $category->category_name}}">
                             <i class="bi bi-trash"></i>
                         </button>
                     </form>
@@ -65,7 +61,7 @@
 
       Swal.fire({
         title: `Delete "${dataName}"?`,
-        text: "Are you sure you want to delete this user?",
+        text: "Are you sure you want to delete this category?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
