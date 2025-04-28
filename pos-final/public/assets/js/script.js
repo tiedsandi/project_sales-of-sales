@@ -23,7 +23,7 @@ function initApp($products) {
 
             if (index === -1) {
                 if (maxQty < 1) {
-                    alert("Stok habis!");
+                    alert("Out of Stock!");
                     return;
                 }
                 this.cart.push({
@@ -37,7 +37,7 @@ function initApp($products) {
             } else {
                 const currentQty = this.cart[index].qty;
                 if (currentQty + 1 > maxQty) {
-                    alert("Jumlah melebihi stok!");
+                    alert("Over stock!");
                     return;
                 }
                 this.cart[index].qty += 1;
@@ -60,7 +60,7 @@ function initApp($products) {
             const afterAdd = item.qty + qty;
 
             if (afterAdd > maxQty) {
-                alert("out of the stock");
+                alert("Out of stock");
                 return;
             }
 
@@ -165,7 +165,7 @@ function initApp($products) {
             const maxQty = product?.qty || 0;
 
             if (item.qty > maxQty) {
-                alert("Out of the stock!");
+                alert("Out of stock!");
                 item.qty = maxQty; // Reset ke jumlah maksimum stok
             }
         },
