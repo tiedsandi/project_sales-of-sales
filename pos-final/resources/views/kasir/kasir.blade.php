@@ -272,9 +272,9 @@
       >
         <div id="receipt-content" class="text-left w-full text-sm p-6 overflow-auto">
           <div class="text-center">
-            <img src="img/receipt-logo.png" alt="Tailwind POS" class="mb-3 w-8 h-8 inline-block">
-            <h2 class="text-xl font-semibold">TAILWIND POS</h2>
-            <p>CABANG KONOHA SELATAN</p>
+            <img src="{{asset('assets/image/img.jpeg')}}" alt="Tailwind POS" class="mb-3 w-8 h-8 inline-block">
+            <h2 class="text-xl font-semibold">Poin Of Sales</h2>
+            <p>CABANG PPKD Pusat</p>
           </div>
           <div class="flex mt-4 text-xs">
             <div class="flex-grow">No: <span x-text="receiptNo"></span></div>
@@ -331,6 +331,7 @@
           <input type="hidden" name="cash" :value="cash">
           <input type="hidden" name="total" :value="getTotalPrice()">
           <input type="hidden" name="change" :value="change">
+          <input type="hidden" name="order_code" :value="receiptNo">
         
           <div class="p-4 w-full">
             <button class="bg-blue-500 text-white text-lg px-4 py-3 rounded-2xl w-full focus:outline-none" x-on:click="printAndProceed()">PROCEED</button>

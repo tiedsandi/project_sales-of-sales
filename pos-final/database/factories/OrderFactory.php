@@ -22,7 +22,7 @@ class OrderFactory extends Factory
     {
 
         return [
-            'order_code' => strtoupper('ORD-' . Str::random(8)),
+            'order_code' => strtoupper('TWPOS-KS-' . Str::random(8)),
             'order_date' => $this->faker->dateTimeBetween('-3 months', 'now')->format('Y-m-d'),
             'order_amount' => $this->faker->numberBetween(10000, 500000),
             'order_change' => $this->faker->numberBetween(0, 10000),

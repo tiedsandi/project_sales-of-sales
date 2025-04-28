@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('product', ProductController::class);
     });
 
-    Route::group(['middleware' => 'role:2'], function () {
+    Route::group(['middleware' => 'role:2,1'], function () {
         Route::get('/report', [TransactionController::class, 'report'])->name('report');
         Route::get('/report/{id}', [TransactionController::class, 'reportDetail'])->name('reportDetail');
         Route::get('/report/print', [TransactionController::class, 'print'])->name('report.print');

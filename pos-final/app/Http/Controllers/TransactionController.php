@@ -32,11 +32,13 @@ class TransactionController extends Controller
 
     public function kasirPost(Request $request)
     {
+        return $request->all();
         $validation  = Validator::make($request->all(), [
             'cart' => 'required',
             'cash' => 'required|numeric|min:0',
             'total' => 'required|numeric|min:0',
             'change' => 'required|numeric|min:0',
+            'order_code' => 'required|numeric|min:0',
         ]);
 
         if ($validation->fails()) {
@@ -47,9 +49,9 @@ class TransactionController extends Controller
 
         $cart = json_decode($request->cart, true);
 
-        $latestIdOrder = Order::max('id') + 1;
+        // $latestIdOrder = Order::max('id') + 1;
         $order = Order::create([
-            'order_code' => $this->generateOrderCode($latestIdOrder),
+            'order_code' => $request->order_code,
             'order_date' => now(),
             'order_amount' => $request->total,
             'order_change' =>  $request->change,
@@ -78,13 +80,13 @@ class TransactionController extends Controller
     }
 
 
-    private function generateOrderCode($orderId)
-    {
-        $prefix = 'POS';
-        $date = now()->format('Ymd');
+    // private function generateOrderCode($orderId)
+    // {
+    //     $prefix = 'POS';
+    //     $date = now()->format('Ymd');
 
-        return "{$prefix}-{$date}-" . str_pad($orderId, 6, '0', STR_PAD_LEFT);
-    }
+    //     return "{$prefix}-{$date}-" . str_pad($orderId, 6, '0', STR_PAD_LEFT);
+    // }
 
     public function report()
     {

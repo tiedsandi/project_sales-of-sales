@@ -20,12 +20,12 @@
         </a>
         <ul id="stock-reports-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="stock">
+            <a href="/stock">
               <i class="bi bi-circle"></i><span>Stock Product</span>
             </a>
           </li>
           <li>
-            <a href="report">
+            <a href="/report">
               <i class="bi bi-circle"></i><span>Report Orders</span>
             </a>
           </li>
@@ -37,13 +37,13 @@
     @if(auth()->user()->role_id == 3)
       <li class="nav-heading">Stock & Casheer</li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="kasir">
+        <a class="nav-link collapsed" href="/kasir">
           <i class="bi bi-grid"></i>
           <span>Casheer</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="stock">
+        <a class="nav-link collapsed" href="/stock">
           <i class="bi bi-grid"></i>
           <span>Stock Product</span>
         </a>
@@ -59,21 +59,28 @@
         </a>
         <ul id="master-data-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="product">
+            <a href="/product">
               <i class="bi bi-circle"></i><span>Product</span>
             </a>
           </li>
           <li>
-            <a href="users">
+            <a href="/users">
               <i class="bi bi-circle"></i><span>User</span>
             </a>
           </li>
           <li>
-            <a href="category">
+            <a href="/category">
               <i class="bi bi-circle"></i><span>Category</span>
             </a>
           </li>
         </ul>
+      </li>
+      <li class="nav-heading">Order</li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/report">
+          <i class="bi bi-grid"></i>
+          <span>Order</span>
+        </a>
       </li>
     @endif
 
