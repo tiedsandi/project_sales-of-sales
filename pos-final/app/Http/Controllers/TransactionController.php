@@ -32,13 +32,13 @@ class TransactionController extends Controller
 
     public function kasirPost(Request $request)
     {
-        return $request->all();
+        // return $request->all();
         $validation  = Validator::make($request->all(), [
             'cart' => 'required',
             'cash' => 'required|numeric|min:0',
             'total' => 'required|numeric|min:0',
             'change' => 'required|numeric|min:0',
-            'order_code' => 'required|numeric|min:0',
+            'order_code' => 'required',
         ]);
 
         if ($validation->fails()) {
